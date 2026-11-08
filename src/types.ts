@@ -7,4 +7,5 @@ export interface SubscriberData {
 }
 
 export const TARGET_URL = 'https://internetwealthtraining.selar.com/page/2k?affiliate=qd6e';
-export const MAILERLITE_ACTION_URL = 'https://assets.mailerlite.com/jsonp/2779605/forms/203600769514997459/subscribe';
+export const MAILERLITE_ACTION_URL = 'https://assets.mailerlite.com/jsonp/2779895/forms/203609196174772082/subscribe';
+export const MAILERLITE_TAKEL_URL = 'https://assets.mailerlite.com/jsonp/2779895/forms/203609196174772082/takel';

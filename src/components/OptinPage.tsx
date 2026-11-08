@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { SubscriberData, MAILERLITE_ACTION_URL } from '../types';
+import React, { useState, useEffect } from 'react';
+import { SubscriberData, MAILERLITE_ACTION_URL, MAILERLITE_TAKEL_URL } from '../types';
 import { User, Mail, Lock } from 'lucide-react';
 
 interface OptinPageProps {
@@ -12,6 +12,15 @@ export const OptinPage: React.FC<OptinPageProps> = ({ onSuccess, subscriber }) =
   const [email, setEmail] = useState(subscriber.email || '');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    // MailerLite form view tracking
+    try {
+      fetch(MAILERLITE_TAKEL_URL, { mode: 'no-cors' }).catch(() => {});
+    } catch {
+      // ignore
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,7 +100,14 @@ export const OptinPage: React.FC<OptinPageProps> = ({ onSuccess, subscriber }) =
             Fill in your details below to get instant access:
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-left">
+          <form
+            action={MAILERLITE_ACTION_URL}
+            method="post"
+            onSubmit={handleSubmit}
+            className="space-y-4 text-left"
+          >
+            <input type="hidden" name="ml-submit" value="1" />
+            <input type="hidden" name="anticsrf" value="true" />
             {errorMsg && (
               <div className="p-3 rounded-lg bg-red-950/80 border border-red-500/50 text-red-200 text-xs">
                 {errorMsg}
